@@ -4,7 +4,7 @@ class HackersController < ApplicationController
   respond_to :html
 
   def index
-    @hackers = Hacker.all
+    @hackers = Hacker.where admin: false
     respond_with(@hackers)
   end
 
