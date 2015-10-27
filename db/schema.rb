@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008154022) do
+ActiveRecord::Schema.define(version: 20151027144852) do
 
   create_table "acquirements", force: :cascade do |t|
     t.integer  "level"
@@ -37,9 +37,10 @@ ActiveRecord::Schema.define(version: 20151008154022) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "career_id"
+    t.boolean  "admin",           default: false, null: false
   end
 
   add_index "hackers", ["career_id"], name: "index_hackers_on_career_id"
