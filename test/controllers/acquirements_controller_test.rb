@@ -2,6 +2,7 @@ require 'test_helper'
 
 class AcquirementsControllerTest < ActionController::TestCase
   setup do
+    session[:hacker_id] = hackers(:jorge).id
     @acquirement = acquirements(:jorge_tdd)
   end
 
