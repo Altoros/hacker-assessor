@@ -15,3 +15,10 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore RVM project config files.
+# If you currently don't have it and want to create it for yourself,
+# install RVM and issue the following command from the project's root directory:
+# ```rvm --ruby-version use 2.2.1@ha```
+/.ruby-gemset
+/.ruby-version
