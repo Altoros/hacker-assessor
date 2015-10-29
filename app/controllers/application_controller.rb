@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   private
 
     def require_authentication
-      redirect_to root_url, alert: 'Login required' unless session[:hacker_id]
+      redirect_to root_url, alert: 'Login required' unless current_hacker.try :admin
     end
 
     def current_hacker

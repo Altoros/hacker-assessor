@@ -2,12 +2,11 @@ require 'test_helper'
 
 class AcquirementsControllerTest < ActionController::TestCase
   setup do
-    session[:hacker_id] = hackers(:jorge).id
     @acquirement = acquirements(:jorge_tdd)
   end
 
   test "index the current hacker acquirements" do
-    get :index
+    get :index, hacker_id: hackers(:jorge).id
     assert_response :success
     assert_not_nil assigns(:acquirements)
     assert_includes assigns(:acquirements), acquirements(:jorge_tdd)
@@ -16,30 +15,34 @@ class AcquirementsControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    get :new
+    get :new, hacker_id: hackers(:jorge).id
     assert_response :success
   end
 
   test "should create acquirement" do
     assert_difference('Acquirement.count') do
-      post :create, acquirement: { level: 2, skill_id: Skill.create(name: 'jQuery') }
+      post :create, hacker_id: hackers(:jorge).id,
+                    acquirement: { level: 2,
+                                   skill_id: Skill.create(name: 'jQuery') }
     end
   end
 
   test "should get edit" do
-    get :edit, id: @acquirement
+    get :edit, id: @acquirement, hacker_id: hackers(:jorge).id
     assert_response :success
   end
 
   test "should update acquirement" do
-    patch :update, id: @acquirement, acquirement: { level: 0,
-                                                    skill_id: @acquirement.skill_id }
+    patch :update, id: @acquirement,
+                   hacker_id: hackers(:jorge).id,
+                   acquirement: { level: 0,
+                                  skill_id: @acquirement.skill_id }
     assert_equal Acquirement.find(@acquirement.id).level, 0
   end
 
   test "should destroy acquirement" do
     assert_difference('Acquirement.count', -1) do
-      delete :destroy, id: @acquirement
+      delete :destroy, id: @acquirement, hacker_id: hackers(:jorge).id
     end
 
     assert_redirected_to acquirements_path
