@@ -8,7 +8,6 @@
       <th>Skill</th>
       <th>Current</th>
       <th>Required</th>
-      <th>Claim</th>
     </tr>
   </thead>
 
@@ -19,12 +18,6 @@
         <td><%= requirement.skill.name %></td>
         <td><%= current_experience.level %></td>
         <td><%= requirement.experience.level %></td>
-        <td><%= button_to 'claim', acquirements_path(acquirement: {
-          hacker_id: @hacker.id,
-          skill_id: requirement.skill.id,
-          level: requirement.level.to_i }),
-          disabled: @hacker != current_hacker %>
-        </td>
       </tr>
     <% end %>
   </tbody>

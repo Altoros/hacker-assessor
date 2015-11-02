@@ -1,5 +1,6 @@
 class CareersController < ApplicationController
   before_action :set_career, only: [:show, :edit, :update, :destroy, :panorama]
+  skip_before_action :require_authentication, only: [:panorama]
 
   respond_to :html
 

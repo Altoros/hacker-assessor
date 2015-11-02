@@ -18,7 +18,7 @@ end
 
 # be logged by default
 ActionController::TestCase.setup do
-  session[:hacker_id] = hackers(:jorge).id
+  session[:hacker_id] = hackers(:admin).id
 end
 
 class ActionDispatch::IntegrationTest

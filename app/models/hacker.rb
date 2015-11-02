@@ -4,7 +4,7 @@ class Hacker < ActiveRecord::Base
   has_many :skills, through: :acquirements
   belongs_to :career
 
-  validates :career_id, presence: true
+  validates :career_id, presence: true, unless: :admin
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
 
