@@ -19,6 +19,7 @@
 $background-ligth: #D8D8D8;
 $background-dark: #616161;
 $button-background: #4A4A4A;
+$button-background-light: #A4A4A4;
 $button-color: #BEBEBE;
 $button-padding: 8px;
 $button-height: 16px;
@@ -29,17 +30,7 @@ $text-input-inner-shadow: #646464;
 $link-color: #949292;
 $text-color: $link-color;
 
-body {
-  font-family: 'Share Tech Mono', sans-serif;
-  height: 100vh;
-
-  > section {
-    @include outer-container(100%);
-    height: 100%;
-  }
-}
-
-@mixin button() {
+@mixin button {
   width: 100%;
   height: 40px;
   margin: 6.5px 0;
@@ -51,6 +42,42 @@ body {
   &:hover {
     text-decoration: underline;
   }
+}
+
+@mixin main-flex {
+  @include fill-parent;
+  @include display(flex);
+  @include flex-direction(column);
+  @include justify-content(streach);
+}
+
+body {
+  font-family: 'Share Tech Mono', sans-serif;
+  height: 100vh;
+
+  > section {
+    @include outer-container(100%);
+    height: 100%;
+  }
+}
+
+table {
+  margin: 2em 0;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 7px;
+  margin-bottom: 20px;
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -102,22 +129,14 @@ nav {
     margin: 20px 0 0 0;
     padding: 0;
 
-    a {
+    li > a {
       @include button();
     }
 
-    a > .avatar {
+    li > a > .avatar {
       height: $button-height + 2*$button-padding;
     }
   }
-}
-
-
-@mixin main-flex {
-  @include fill-parent;
-  @include display(flex);
-  @include flex-direction(column);
-  @include justify-content(streach);
 }
 
 main {
@@ -185,29 +204,31 @@ input {
   }
 }
 
+section section {
+  input {
+    @extend input;
+
+    &[type='text'], &[type='password'] {
+      @include placeholder {
+        color: $text-input-placeholder-color;
+      }
+
+      background: darken($background-ligth, 5%);
+      box-shadow: inset 0px 1px 0px 0px darken($background-ligth, 10%);
+    }
+
+    &[type='submit'] {
+      background: $button-background-light;
+      box-shadow: 0px 2px 0px 0px darken($button-background-light, 10%);
+      color: darken($text-color, 25%);
+    }
+  }
+}
+
 .almost-accomplished {
-  background-color: #B58900;
+  border-color: #B58900;
 }
 
 .not-accomplished {
-  background-color: #DC322F;
-}
-
-table {
-  margin: 2em 0;
-}
-
-th, td {
-  border: 1px solid black;
-  padding: 7px;
-  margin-bottom: 20px;
-}
-
-li {
-  list-style: none;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
+  border-color: #DC322F;
 }
