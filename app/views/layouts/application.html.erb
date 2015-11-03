@@ -17,7 +17,9 @@
     <main>
       <section>
         <% flash.each do |name, msg| %>
-          <%= content_tag :div, msg, class: name %>
+          <div class="box-success">
+            <%= content_tag :div, msg, class: name %>
+          </div>
         <% end %>
         <%= yield %>
       </section>
