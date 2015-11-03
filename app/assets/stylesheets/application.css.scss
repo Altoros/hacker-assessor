@@ -19,13 +19,14 @@
 $background-ligth: #D8D8D8;
 $background-dark: #616161;
 $button-background: #4A4A4A;
-$button-background-light: #A4A4A4;
+$button-background-light: #F1F1F1;
 $button-color: #BEBEBE;
 $button-padding: 8px;
 $button-height: 16px;
 $button-outter-shadow: #4B4B4B;
 $text-input-background: #6B6B6B;
-$text-input-placeholder-color: #8F8F8F;
+$text-input-placeholder: #8F8F8F;
+$text-input-placeholder-light: #BBBBBB;
 $text-input-inner-shadow: #646464;
 $link-color: #949292;
 $text-color: $link-color;
@@ -54,6 +55,7 @@ $text-color: $link-color;
 body {
   font-family: 'Share Tech Mono', sans-serif;
   height: 100vh;
+  color: darken($text-color, 20%);
 
   > section {
     @include outer-container(100%);
@@ -159,6 +161,7 @@ main {
 
     > footer {
       @include span-columns(12, 'block-collapse');
+      text-align: center;
     }
   }
 
@@ -182,7 +185,8 @@ input {
 
   &[type='text'], &[type='password'] {
     @include placeholder {
-      color: $text-input-placeholder-color;
+      color: $text-input-placeholder;
+      text-transform: capitalize;
     }
 
     background: $text-input-background;
@@ -209,26 +213,73 @@ section section {
     @extend input;
 
     &[type='text'], &[type='password'] {
+
       @include placeholder {
-        color: $text-input-placeholder-color;
+        color: $text-input-placeholder-light;
+        text-transform: capitalize;
       }
 
-      background: darken($background-ligth, 5%);
-      box-shadow: inset 0px 1px 0px 0px darken($background-ligth, 10%);
+      background: #E0E0E0;
+      box-shadow: inset 0px 1px 0px 0px #C7C7C7;
     }
 
     &[type='submit'] {
       background: $button-background-light;
-      box-shadow: 0px 2px 0px 0px darken($button-background-light, 10%);
+      box-shadow: 0px 2px 0px 0px #AFAFAF;
       color: darken($text-color, 25%);
+      font-size: 16px;
+      text-transform: uppercase;
     }
+  }
+
+  textarea {
+    @include fill-parent;
+
+    @include placeholder {
+      color: $text-input-placeholder-light;
+      text-transform: capitalize;
+    }
+
+    resize: none;
+    background: #E0E0E0;
+    box-shadow: inset 0px 1px 0px 0px #C7C7C7;
+    border-radius: 2px;
+    border-width: 0;
+    font-size: 18px;
+    padding: 0.5em;
+  }
+}
+
+.box-error {
+  $error: #DA6D5A;
+  color: $error;
+  border: 1px solid $error;
+  padding: 1em;
+  margin: 0.5em 0;
+  li {
+    list-style: square;
+    list-style-position: inside;
+    padding-left: 1em;
+  }
+}
+
+.box-success {
+  $success: #4AB772;
+  color: $success;
+  border: 1px solid $success;
+  padding: 1em;
+  margin: 0.5em 0;
+  li {
+    list-style: square;
+    list-style-position: inside;
+    padding-left: 1em;
   }
 }
 
 .almost-accomplished {
-  border-color: #B58900;
+  background-color: #FFDC6E;
 }
 
 .not-accomplished {
-  border-color: #DC322F;
+  background-color: #FF9685;
 }
