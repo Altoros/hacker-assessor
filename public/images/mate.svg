@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="300px" height="300px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+    <title>Mate</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Images" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Mate" sketch:type="MSLayerGroup" transform="translate(43.000000, 0.000000)" fill="#626161">
+            <path d="M181.778541,30.0545881 L219.46353,5.13964259 L219.46353,0.533325926 L167.043495,23.5138648 L102.526349,124.691069 L123.539299,124.691069 L181.778541,30.0545881 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+            <path d="M0.862125304,113.212949 C-0.251096157,124.222697 5.74521696,125.546163 5.74521719,125.546163 C5.74521683,125.546163 27.2709257,156.356024 27.2709257,156.356024 C27.2709257,156.356024 0.86212531,196.209376 5.745217,236.495725 C10.6283087,276.782075 54.5050758,300.596925 97.0345178,300.596925 C139.56396,300.596925 166.052541,272.527788 177.395574,238.614948 C188.738606,204.702108 154.042775,156.356024 154.042775,156.356024 L174.666932,125.546163 C174.666932,125.546163 180.019656,124.105647 180.019656,113.212949 C180.019656,113.212949 0.862125304,113.212949 0.862125304,113.212949 Z" id="Path-2" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
