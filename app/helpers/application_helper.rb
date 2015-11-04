@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def gravatar_url hacker
-    'http://www.gravatar.com/avatar/' + md5(hacker.email)
+    'http://www.gravatar.com/avatar/' + md5(hacker.email) + '?d=mm'
   end
 
   def current_hacker_gravatar
