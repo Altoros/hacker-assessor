@@ -1,6 +1,6 @@
 <h1><%= @career.name %> career</h1>
-
-<table class="panorama">
+<%= link_to 'Back', careers_path %>
+<table>
   <thead>
     <tr>
       <th>Skill</th>
@@ -9,7 +9,6 @@
       <% end %>
     </tr>
   </thead>
-
   <tbody>
     <% @panorama.each_skill do |requirement| %>
       <tr>
@@ -21,5 +20,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to 'Back', careers_path %>

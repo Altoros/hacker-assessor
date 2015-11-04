@@ -19,27 +19,19 @@
 $background-ligth: #D8D8D8;
 $background-dark: #616161;
 $button-background: #4A4A4A;
+$button-background-light: #F1F1F1;
 $button-color: #BEBEBE;
 $button-padding: 8px;
 $button-height: 16px;
 $button-outter-shadow: #4B4B4B;
 $text-input-background: #6B6B6B;
-$text-input-placeholder-color: #8F8F8F;
+$text-input-placeholder: #8F8F8F;
+$text-input-placeholder-light: #BBBBBB;
 $text-input-inner-shadow: #646464;
 $link-color: #949292;
 $text-color: $link-color;
 
-body {
-  font-family: 'Share Tech Mono', sans-serif;
-  height: 100vh;
-
-  > section {
-    @include outer-container(100%);
-    height: 100%;
-  }
-}
-
-@mixin button() {
+@mixin button {
   width: 100%;
   height: 40px;
   margin: 6.5px 0;
@@ -51,6 +43,43 @@ body {
   &:hover {
     text-decoration: underline;
   }
+}
+
+@mixin main-flex {
+  @include fill-parent;
+  @include display(flex);
+  @include flex-direction(column);
+  @include justify-content(streach);
+}
+
+body {
+  font-family: 'Share Tech Mono', sans-serif;
+  height: 100vh;
+  color: darken($text-color, 20%);
+
+  > section {
+    @include outer-container(100%);
+    height: 100%;
+  }
+}
+
+table {
+  margin: 2em 0;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 7px;
+  margin-bottom: 20px;
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -102,22 +131,14 @@ nav {
     margin: 20px 0 0 0;
     padding: 0;
 
-    a {
+    li > a {
       @include button();
     }
 
-    a > .avatar {
+    li > a > .avatar {
       height: $button-height + 2*$button-padding;
     }
   }
-}
-
-
-@mixin main-flex {
-  @include fill-parent;
-  @include display(flex);
-  @include flex-direction(column);
-  @include justify-content(streach);
 }
 
 main {
@@ -140,6 +161,7 @@ main {
 
     > footer {
       @include span-columns(12, 'block-collapse');
+      text-align: center;
     }
   }
 
@@ -163,7 +185,8 @@ input {
 
   &[type='text'], &[type='password'] {
     @include placeholder {
-      color: $text-input-placeholder-color;
+      color: $text-input-placeholder;
+      text-transform: capitalize;
     }
 
     background: $text-input-background;
@@ -185,29 +208,78 @@ input {
   }
 }
 
+section section {
+  input {
+    @extend input;
+
+    &[type='text'], &[type='password'] {
+
+      @include placeholder {
+        color: $text-input-placeholder-light;
+        text-transform: capitalize;
+      }
+
+      background: #E0E0E0;
+      box-shadow: inset 0px 1px 0px 0px #C7C7C7;
+    }
+
+    &[type='submit'] {
+      background: $button-background-light;
+      box-shadow: 0px 2px 0px 0px #AFAFAF;
+      color: darken($text-color, 25%);
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+  }
+
+  textarea {
+    @include fill-parent;
+
+    @include placeholder {
+      color: $text-input-placeholder-light;
+      text-transform: capitalize;
+    }
+
+    resize: none;
+    background: #E0E0E0;
+    box-shadow: inset 0px 1px 0px 0px #C7C7C7;
+    border-radius: 2px;
+    border-width: 0;
+    font-size: 18px;
+    padding: 0.5em;
+  }
+}
+
+.box-error {
+  $error: #DA6D5A;
+  color: $error;
+  border: 1px solid $error;
+  padding: 1em;
+  margin: 0.5em 0;
+  li {
+    list-style: square;
+    list-style-position: inside;
+    padding-left: 1em;
+  }
+}
+
+.box-success {
+  $success: #4AB772;
+  color: $success;
+  border: 1px solid $success;
+  padding: 1em;
+  margin: 0.5em 0;
+  li {
+    list-style: square;
+    list-style-position: inside;
+    padding-left: 1em;
+  }
+}
+
 .almost-accomplished {
-  background-color: #B58900;
+  background-color: #FFDC6E;
 }
 
 .not-accomplished {
-  background-color: #DC322F;
-}
-
-table {
-  margin: 2em 0;
-}
-
-th, td {
-  border: 1px solid black;
-  padding: 7px;
-  margin-bottom: 20px;
-}
-
-li {
-  list-style: none;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
+  background-color: #FF9685;
 }

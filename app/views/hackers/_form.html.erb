@@ -1,7 +1,7 @@
 <%= form_for(@hacker) do |f| %>
   <% if @hacker.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@hacker.errors.count, "error") %> prohibited this hacker from being saved:</h2>
+    <div class="box-error">
+      <span>Your invitation has errors. Please check the items below.</span>
 
       <ul>
       <% @hacker.errors.full_messages.each do |message| %>
@@ -12,20 +12,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :placeholder => :name %>
   </div>
   <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, :placeholder => :email %>
   </div>
   <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, :placeholder => :password %>
   </div>
   <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation, :placeholder => :password_confirmation %>
   </div>
   <div class="field">
     <%= f.label :career_id %>
