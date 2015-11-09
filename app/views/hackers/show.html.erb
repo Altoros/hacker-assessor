@@ -1,6 +1,7 @@
-<h1><%= @hacker.name %></h1>
-<p>For your career of <strong><%= @hacker.career.name %></strong> this is your path
-<h1><%= @hacker.seniority %> => <%= @hacker.seniority.next %></h1>
+<h1>
+  Welcome <%= @hacker.name %> - <%= link_to @hacker.career.name, panorama_career_path(@hacker.career) %>
+</h1>
+<h2><%= @hacker.seniority %> => <%= @hacker.seniority.next %></h2>
 
 <table class="dashboard">
   <thead>
