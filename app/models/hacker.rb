@@ -8,10 +8,6 @@ class Hacker < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
 
-  def seniority
-    career.get_seniority acquirements unless id.nil?
-  end
-
   def missing_requirements_for_next_seniority
     career.missing_requirements(acquirements).keep_if do |r|
       r.seniority == seniority.next

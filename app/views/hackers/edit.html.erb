@@ -1,4 +1,35 @@
 <h1>Editing Hacker</h1>
 <%= link_to 'Show', @hacker %> |
 <%= link_to 'Back', hackers_path %>
-<%= render 'form' %>
+
+<%= form_for(@hacker) do |f| %>
+  <% if @hacker.errors.any? %>
+    <div class="box-error">
+      <span>There are some errors. Please check the items below.</span>
+
+      <ul>
+      <% @hacker.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.text_field :name, :placeholder => :name %>
+  </div>
+  <div class="field">
+    <%= f.text_field :email, :placeholder => :email %>
+  </div>
+  <div class="field">
+    <%= f.label :career_id %>
+    <%= f.select :career_id, Career.all.collect { |p| [ p.name, p.id  ] } %>
+  </div>
+  <div class="field">
+    <%= f.label :seniority %>
+    <%= f.seniority_select %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

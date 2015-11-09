@@ -43,6 +43,7 @@ if Hacker.all.empty? || Rails.env.development? || Rails.env.test?
     hacker.password = 'password'
     hacker.name = 'Test'
     hacker.career = career
+    hacker.seniority = 1
   end
 end
 
