@@ -7,6 +7,7 @@ class WelcomeController < ApplicationController
       redirect_to hackers_path
     when 'hacker'
       @hacker = current_hacker
+      @dashboard = Dashboard.new(@hacker)
       render 'hackers/show'
     end
   end

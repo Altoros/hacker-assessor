@@ -71,6 +71,13 @@ th, td {
   border: 1px solid black;
   padding: 7px;
   margin-bottom: 20px;
+
+  &.cross {
+    color: red;
+  }
+  &.tilde {
+    color: green;
+  }
 }
 
 li {

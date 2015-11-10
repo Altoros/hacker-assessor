@@ -7,7 +7,7 @@ class HackerFlowsTest < ActionDispatch::IntegrationTest
     assert has_content? 'jorge'
 
     within 'tbody tr', text: 'tdd' do
-      assert has_content? 'competent'
+      assert has_content? '✘'
     end
   end
 
@@ -19,7 +19,7 @@ class HackerFlowsTest < ActionDispatch::IntegrationTest
     assert has_content? 'rodrigo'
 
     within 'tbody tr', text: 'tdd' do
-      assert has_content? 'competent'
+      assert has_content? '✘'
     end
   end
 

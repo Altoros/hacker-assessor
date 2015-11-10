@@ -17,4 +17,8 @@ class Hacker < ActiveRecord::Base
   def experience skill
     acquirements.find_or_initialize_by(skill: skill).experience
   end
+
+  def seniority
+    Seniority.new(super)
+  end
 end

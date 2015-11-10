@@ -18,4 +18,11 @@ module ApplicationHelper
   def current_hacker_gravatar
     image_tag(gravatar_url(current_hacker), class: 'avatar')
   end
+
+  def symbolize value
+    case value
+    when :tilde then '✔'
+    when :cross then '✘'
+    end
+  end
 end
