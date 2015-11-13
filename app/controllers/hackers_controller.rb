@@ -9,6 +9,7 @@ class HackersController < ApplicationController
   end
 
   def show
+    @dashboard = Dashboard.new(@hacker)
     respond_with(@hacker)
   end
 

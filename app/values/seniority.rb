@@ -25,13 +25,8 @@ class Seniority
     NAMES.fetch(@seniority)
   end
 
-  def previous
-    raise "There is no previous for #{ self }" if @seniority == 0
-    self.class.new(@seniority - 1)
-  end
-
   def next
-    raise "There is no next for #{ self }" if @seniority == (NAMES.size + 1)
+    return self if @seniority == (NAMES.size - 1)
     self.class.new(@seniority + 1)
   end
 end

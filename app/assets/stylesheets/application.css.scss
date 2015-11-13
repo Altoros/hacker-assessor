@@ -71,6 +71,13 @@ th, td {
   border: 1px solid black;
   padding: 7px;
   margin-bottom: 20px;
+
+  &.cross {
+    color: red;
+  }
+  &.tilde {
+    color: green;
+  }
 }
 
 li {
@@ -274,12 +281,4 @@ section section {
     list-style-position: inside;
     padding-left: 1em;
   }
-}
-
-.almost-accomplished {
-  background-color: #FFDC6E;
-}
-
-.not-accomplished {
-  background-color: #FF9685;
 }
