@@ -12,16 +12,13 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, required: true %>
+    <%= f.text_field :name, required: true, :placeholder => :name %>
   </div>
   <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, :placeholder => :description %>
   </div>
   <div class="field">
-    <%= f.label :requirements %><br>
-    <%= f.file_field :requirements, required: true %>
+    <%= f.file_field :requirements, required: true, :placeholder => :requirements %>
   </div>
   <div class="actions">
     <%= f.submit %>
