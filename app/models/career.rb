@@ -4,8 +4,13 @@ class Career < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
 
+  # Get the current seniority for a given set of requirements.
+  #
+  # Handle specialy the case of knowing everything required for all levels.
   def get_seniority acquirements
-    missing_requirements(acquirements).map(&:seniority).min.previous
+    missing_requirements = missing_requirements(acquirements)
+    return Seniority.new(Seniority::NAMES.size - 1) if missing_requirements.empty?
+    missing_requirements.map(&:seniority).min.previous
   end
 
   def missing_requirements acquirements
