@@ -2,6 +2,9 @@ if ENV['CODECLIMATE_REPO_TOKEN'] &&
    ENV['CI_BRANCH'] == 'master'
   require "codeclimate-test-reporter"
   CodeClimate::TestReporter.start
+elsif ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails'
 end
 
 ENV['RAILS_ENV'] ||= 'test'
