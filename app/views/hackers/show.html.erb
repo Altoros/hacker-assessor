@@ -1,28 +1,31 @@
 <h1>
   Welcome <%= @hacker.name %> - <%= link_to @hacker.career.name, panorama_career_path(@hacker.career) %>
 </h1>
-<h2><%= @hacker.seniority.to_s %> --> <%= @hacker.seniority.next.to_s %></h2>
+<h2><%= @hacker.seniority %> => <%= @hacker.seniority.next %></h2>
 
 <table class="dashboard">
   <thead>
     <tr>
       <th>Skill</th>
-      <% Experience::LEVELS.each do |experience| %>
-        <th><%= experience.capitalize %></th>
-      <% end %>
+      <th>Current</th>
+      <th>Required</th>
+      <th>Claim</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @dashboard.rows.each do |row| %>
-      <tr>
-        <td><%= row.first %></td>
-        <% (0...Experience::LEVELS.size).each do |level| %>
-          <% value = row.last[level] %>
-          <td class="<%= value %>">
-            <%= symbolize(value) %>
-          </td>
-        <% end %>
+    <% @hacker.missing_requirements_for_next_seniority.each do |requirement| %>
+      <% current_experience = current_hacker.experience(requirement.skill) %>
+      <tr class="<%= assign_class requirement.experience, current_experience %>">
+        <td><%= requirement.skill.name %></td>
+        <td><%= current_experience.level %></td>
+        <td><%= requirement.experience.level %></td>
+        <td><%= button_to 'claim', acquirements_path(acquirement: {
+          hacker_id: @hacker.id,
+          skill_id: requirement.skill.id,
+          level: requirement.level.to_i }),
+          disabled: @hacker != current_hacker %>
+        </td>
       </tr>
     <% end %>
   </tbody>

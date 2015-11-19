@@ -5,32 +5,24 @@
       <span>ASSESSOR</span>
     <% end %>
   </div>
-
-  <ul>
-    <% case current_role %>
-    <% when 'admin' %>
+  <% if current_hacker %>
+    <ul>
       <li><%= link_to current_hacker_gravatar %></li>
+      <li><%= link_to 'ACQUIREMENTS', acquirements_path %></li>
       <li><%= link_to 'CAREERS', careers_path %></li>
       <li><%= link_to 'INVITE', new_hacker_path %></li>
       <li><%= link_to 'HACKERS LIST', hackers_path %></li>
       <li><%= link_to 'SKILLS', skills_path %></li>
-      <li><%= link_to 'LOGOUT', signout_path, method: :delete %></li>
-
-    <% when 'hacker' %>
-      <li><%= link_to current_hacker_gravatar %></li>
-      <li><%= link_to current_hacker.career.name,
-                      panorama_career_path(current_hacker.career) %></li>
-      <li><%= link_to 'LOGOUT', signout_path, method: :delete %></li>
-
-    <% when 'guest' %>
-      <div class="form--login">
-        <%= form_tag login_path do |f| %>
-          <%= text_field_tag :email, nil, placeholder: 'email' %>
-          <%= password_field_tag :password, nil, placeholder: 'password' %>
-          <a href="#">Forgot your password?</a>
-          <%= submit_tag 'SIGN IN' %>
-        <% end %>
-      </div>
-    <% end %>
-  </ul>
+      <li><%= link_to 'LOGOUT',signout_path, method: :delete %></li>
+    </ul>
+  <% else %>
+    <div class="form--login">
+      <%= form_tag login_path do |f| %>
+        <%= text_field_tag :email, nil, placeholder: 'email' %>
+        <%= password_field_tag :password, nil, placeholder: 'password' %>
+        <a href="#">Forgot your password?</a>
+        <%= submit_tag 'SIGN IN' %>
+      <% end %>
+    </div>
+  <% end %>
 </nav>

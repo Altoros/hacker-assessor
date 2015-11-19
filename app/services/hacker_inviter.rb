@@ -1,6 +1,6 @@
 class HackerInviter
   def initialize params
-    @hacker = Hacker.new(params)
+    @hacker = Hacker.new(params.except :seniority)
     @hacker.save
     add_acquirements params[:seniority]
   end

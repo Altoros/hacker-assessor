@@ -10,6 +10,6 @@ class HackerInviterTest < ActiveSupport::TestCase
                seniority: '3' }
 
     HackerInviter.new(params)
-    assert_equal 3, Hacker.find_by(email: 'semi-senior@hacker.com').seniority
+    assert_equal Hacker.find_by(email: 'semi-senior@hacker.com').seniority, '3'
   end
 end
