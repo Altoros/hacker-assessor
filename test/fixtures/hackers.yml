@@ -3,19 +3,11 @@
 jorge:
   name: $LABEL
   career: js
-  seniority: 2
   email: jorge@altoros.com
   password_digest: <%= BCrypt::Password.create('jorge') %>
 
 rodrigo:
   name: $LABEL
   career: js
-  seniority: 2
   email: rodri@altoros.com
   password_digest: <%= BCrypt::Password.create('rodrigo') %>
-
-admin:
-  name: $LABEL
-  email: mgarciap@gmail.com
-  admin: true
-  password_digest: <%= BCrypt::Password.create('admin') %>

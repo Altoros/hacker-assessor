@@ -35,7 +35,7 @@ class AcquirementsController < ApplicationController
 
   private
     def acquirements
-      Hacker.find(params[:hacker_id]).acquirements
+      current_hacker.acquirements
     end
 
     def set_acquirement

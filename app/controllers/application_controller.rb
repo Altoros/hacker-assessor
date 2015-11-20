@@ -7,26 +7,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :require_authentication
-  helper_method :current_hacker, :current_role
+  helper_method :current_hacker
 
   private
 
     def require_authentication
-      redirect_to root_url, alert: 'Login required' unless current_hacker.try :admin
+      redirect_to root_url, alert: 'Login required' unless session[:hacker_id]
     end
 
     def current_hacker
       @current_hacker ||= Hacker.find session[:hacker_id] if session[:hacker_id]
-    end
-
-    def current_role
-      case
-      when current_hacker.try(:admin)
-        'admin'
-      when current_hacker
-        'hacker'
-      else
-        'guest'
-      end
     end
 end

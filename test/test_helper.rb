@@ -2,6 +2,9 @@ if ENV['CODECLIMATE_REPO_TOKEN'] &&
    ENV['CI_BRANCH'] == 'master'
   require "codeclimate-test-reporter"
   CodeClimate::TestReporter.start
+elsif ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails'
 end
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -18,7 +21,7 @@ end
 
 # be logged by default
 ActionController::TestCase.setup do
-  session[:hacker_id] = hackers(:admin).id
+  session[:hacker_id] = hackers(:jorge).id
 end
 
 class ActionDispatch::IntegrationTest

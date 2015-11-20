@@ -4,12 +4,11 @@ class HackersController < ApplicationController
   respond_to :html
 
   def index
-    @hackers = Hacker.where admin: false
+    @hackers = Hacker.all
     respond_with(@hackers)
   end
 
   def show
-    @dashboard = Dashboard.new(@hacker)
     respond_with(@hacker)
   end
 

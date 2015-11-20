@@ -201,6 +201,7 @@ DEPENDENCIES
   rollbar (~> 2.4)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  simplecov
   spring
   sqlite3
   turbolinks

@@ -32,20 +32,11 @@ career = Career.find_or_create_by! name: 'Javascript' do |c|
 end
 
 # Lets make tests simplier
-if Hacker.all.empty? || Rails.env.development? || Rails.env.test?
-  Hacker.find_or_create_by! email: 'admin@hacker.com' do |hacker|
-    hacker.password = 'password'
-    hacker.name = 'Manuel Garcia'
-    hacker.admin = true
-  end
-
-  Hacker.find_or_create_by! email: 'test@hacker.com' do |hacker|
-    hacker.password = 'password'
-    hacker.name = 'Test'
-    hacker.career = career
-    hacker.seniority = 1
-  end
-end
+Hacker.find_or_create_by! email: 'test@hacker.com' do |hacker|
+  hacker.password = 'password'
+  hacker.name = 'Test'
+  hacker.career = career
+end if Hacker.all.empty? || Rails.env.development? || Rails.env.test?
 
 hacker = Hacker.find_by email: 'test@hacker.com'
 if hacker
