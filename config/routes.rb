@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/styleguide' => 'styleguide#index'
+  
   resources :careers do
     resources :requirements, except: [:index, :show]
     get 'panorama', on: :member
@@ -13,6 +15,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   post 'login' => 'sessions#create', as: 'login'
   match 'signout' => 'sessions#destroy', via: [:get, :delete]
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
