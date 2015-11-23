@@ -5,21 +5,6 @@ class HackerFlowsTest < ActionDispatch::IntegrationTest
     login :jorge
   end
 
-  test "jorge claim that he played with tdd" do
-    assert has_content? 'jorge'
-
-    within 'tbody tr', text: 'tdd' do
-      assert has_content? 'competent'
-      click_on 'claim'
-    end
-
-    assert has_content?('Now you know tdd'), 'display a flash message'
-
-    within 'tbody' do
-      refute has_content? 'tdd'
-    end
-  end
-
   test "jorge wants to see other hacker dashboard" do
     click_link 'HACKERS LIST'
     click_link 'rodrigo'
