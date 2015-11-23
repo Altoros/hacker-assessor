@@ -1,18 +1,15 @@
 require 'test_helper'
 
 class HackerFlowsTest < ActionDispatch::IntegrationTest
-  setup do
+
+  test "jorge wants to check what he needs to learn" do
     login :jorge
-  end
 
-  test "jorge wants to see other hacker dashboard" do
-    click_link 'HACKERS LIST'
-    click_link 'rodrigo'
-
-    assert has_content? 'rodrigo'
+    assert has_content?(/Junior\+.*Semi-Senior/), 'seniority'
 
     within 'tbody tr', text: 'tdd' do
-      assert has_content? 'beginner'
+      assert has_content?('beginner'), 'current level'
+      assert has_content?('competent'), 'required level'
     end
   end
 
