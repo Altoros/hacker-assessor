@@ -15,7 +15,7 @@
 
   <tbody>
     <% @hacker.missing_requirements_for_next_seniority.each do |requirement| %>
-      <% current_experience = current_hacker.experience(requirement.skill) %>
+      <% current_experience = @hacker.experience(requirement.skill) %>
       <tr class="<%= assign_class requirement.experience, current_experience %>">
         <td><%= requirement.skill.name %></td>
         <td><%= current_experience.level %></td>

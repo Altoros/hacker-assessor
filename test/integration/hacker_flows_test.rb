@@ -13,6 +13,16 @@ class HackerFlowsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'Leo assess that jorge knows tdd to reach to Semi-Senior' do
+    login :leo
+    click_on 'HACKERS LIST'
+    click_on 'jorge'
+    within 'tbody tr', text: 'tdd' do
+      assert has_content?('beginner'), 'current level'
+      assert has_content?('competent'), 'required level'
+    end
+  end
+
   def login hacker
     visit root_path
     fill_in :email, with: hackers(hacker).email
