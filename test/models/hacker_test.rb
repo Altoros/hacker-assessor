@@ -2,13 +2,13 @@ require 'test_helper'
 
 class HackerTest < ActiveSupport::TestCase
   test "have a seniority" do
-    assert_equal 2, hackers(:jorge).seniority
+    assert_equal 2, hackers(:rodrigo).seniority
   end
 
   test "lacks two skills for next seniority" do
-    missing = hackers(:jorge).missing_requirements_for_next_seniority
+    missing = hackers(:rodrigo).missing_requirements_for_next_seniority
     assert_equal 2, missing.size
-    assert_includes missing, requirements(:senior_js_ruby)
+    assert_includes missing, requirements(:senior_js_js)
     assert_includes missing, requirements(:senior_js_tdd)
   end
 
