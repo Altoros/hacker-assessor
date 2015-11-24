@@ -17,4 +17,9 @@ class HackerTest < ActiveSupport::TestCase
     assert_equal 'none', hackers(:jorge).experience(skills(:ruby)).level
     assert_equal 2, hackers(:jorge).acquirements.size, 'creates extra objects'
   end
+
+  test 'Senior hackers are elders' do
+    refute hackers(:jorge).is_elder?, 'jorge is elder'
+    assert hackers(:leo).is_elder?, 'leo is not elder'
+  end
 end

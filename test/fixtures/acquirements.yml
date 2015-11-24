@@ -14,3 +14,18 @@ rodri_js:
   level: 2
   hacker: rodrigo
   skill: javascript
+
+leo_js:
+  level: 6
+  hacker: leo
+  skill: javascript
+
+leo_tdd:
+  level: 5
+  hacker: leo
+  skill: tdd
+
+leo_ruby:
+  level: 3
+  hacker: leo
+  skill: ruby

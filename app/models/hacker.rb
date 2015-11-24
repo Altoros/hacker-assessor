@@ -23,4 +23,8 @@ class Hacker < ActiveRecord::Base
     level = acquirement ? acquirement.level : 0
     Experience.new skill.id, level
   end
+
+  def is_elder?
+    seniority >= Seniority.new(Seniority::NAMES.index('Senior'))
+  end
 end
