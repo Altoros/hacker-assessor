@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+
   resources :careers do
     resources :requirements, except: [:index, :show]
     get 'panorama', on: :member
   end
   resources :acquirements, except: [:show]
-  resources :hackers
+  resources :hackers do
+    resources :experiences, only: [:create]
+  end
   resources :skills
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

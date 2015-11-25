@@ -18,9 +18,12 @@ class HackerFlowsTest < ActionDispatch::IntegrationTest
     click_on 'HACKERS LIST'
     click_on 'jorge'
     within 'tbody tr', text: 'tdd' do
-      assert has_content?('beginner'), 'current level'
+      assert has_selector?('option[value=beginner][selected]'), 'current level'
       assert has_content?('competent'), 'required level'
+      find(:select, 'experience[level]').select('competent')
+      click_on('update')
     end
+    assert has_content?('Semi-Senior =>')
   end
 
   def login hacker

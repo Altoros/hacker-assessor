@@ -34,6 +34,12 @@ class HackersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "show a hacker from an elder" do
+    session[:hacker_id] = hackers(:leo).id
+    get :show, id: @hacker
+    assert_response :success
+  end
+
   test "should get edit" do
     get :edit, id: @hacker
     assert_response :success
