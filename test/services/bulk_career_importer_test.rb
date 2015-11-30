@@ -31,22 +31,13 @@ class BulkCareerImporterTest < ActiveSupport::TestCase
     assert_equal 1, built_requirements.where(skill: skills(:javascript)).size
   end
 
-  test 'bulk upload with a missing skill will change nothing' do
+  test 'bulk upload with a missing skill will create the skill' do
     bulk_upload 'ruby', <<-CSV.strip_heredoc
        tdd,0,1,2,3,3,4,5,5,5,5
-       invalid,0,1,2,3,3,4,5,5,5,5
+       missing,0,0,3,3,3,5,5,5,5,5
        CSV
-    assert_equal 1, careers(:ruby).requirements.size
-  end
-
-  test 'bulk upload with a missing skill have errors' do
-    bulk = bulk_upload 'ruby', <<-CSV.strip_heredoc
-       tdd,0,1,2,3,3,4,5,5,5,5
-       scrumming,0,1,2,3,3,4,5,5,5,5
-       CSV
-    assert_equal 1, careers(:ruby).requirements.size
-    assert_includes bulk.errors.full_messages,
-      'Requirements includes non existing skill "scrumming"'
+    missing_skill = Skill.find_by name: 'missing'
+    assert missing_skill, 'skill was created'
   end
 
   test 'bulk upload with requirements with nils' do
