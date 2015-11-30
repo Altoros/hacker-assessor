@@ -6,6 +6,10 @@ class BulkCareerImporter
   include ActiveRecord::Validations
   extend Forwardable
 
+  ENFORCED_HEADERS = %w[ skill apprentice junior junior+ semi-senior
+                         semi-senior+ senior senior+ lead architect
+                         hero ]
+
   attr_accessor :career
   def_delegators :career, :to_model, :to_param, :to_key, :name, :description
 
@@ -14,13 +18,24 @@ class BulkCareerImporter
       build_career name
       career.description = description if description
       career.requirements.destroy_all
-      CSV.parse(requirements) do |skill, *requirements_for_skill|
-        build_requirements find_skill(skill), requirements_for_skill
+      data = CSV.new requirements, headers: true, header_converters: :downcase
+      data = data.read
+      check_headers data
+      data.each do |skill_requirements|
+        build_requirements find_skill(skill_requirements['skill']),
+          skill_requirements.fields(1..-1)
       end
     end
   end
 
   private
+
+  def check_headers data
+    unless data.headers == ENFORCED_HEADERS
+      errors.add :requirements, 'headers do not match'
+      raise ActiveRecord::Rollback, 'invalid headers'
+    end
+  end
 
   def find_skill skill_name
     Skill.find_by! 'lower(name) = ?', skill_name.downcase
