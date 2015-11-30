@@ -9,23 +9,27 @@
       <th>Skill</th>
       <th>Current</th>
       <th>Required</th>
-      <th>Claim</th>
     </tr>
   </thead>
 
   <tbody>
     <% @hacker.missing_requirements_for_next_seniority.each do |requirement| %>
-      <% current_experience = current_hacker.experience(requirement.skill) %>
+      <% current_experience = @hacker.experience(requirement.skill) %>
       <tr class="<%= assign_class requirement.experience, current_experience %>">
         <td><%= requirement.skill.name %></td>
-        <td><%= current_experience.level %></td>
-        <td><%= requirement.experience.level %></td>
-        <td><%= button_to 'claim', acquirements_path(acquirement: {
-          hacker_id: @hacker.id,
-          skill_id: requirement.skill.id,
-          level: requirement.level.to_i }),
-          disabled: @hacker != current_hacker %>
+        <td>
+          <% if current_hacker.is_elder? %>
+            <%= form_for :experience, url: hacker_experiences_path(@hacker) do |f| %>
+              <%= f.hidden_field :skill_id, value: current_experience.skill_id %>
+              <%= f.select       :level, Experience::LEVELS,
+                                 selected: current_experience.level %>
+              <%= submit_tag 'update' %>
+            <% end %>
+          <% else %>
+            <%= current_experience.level %>
+          <% end %>
         </td>
+        <td><%= requirement.experience.level %></td>
       </tr>
     <% end %>
   </tbody>

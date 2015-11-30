@@ -1,5 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+semisenior_js_js:
+  level: 2
+  seniority: 2
+  career: js
+  skill: javascript
+
+senior_js_js:
+  level: 3
+  seniority: 3
+  career: js
+  skill: javascript
+
 supersenior_js_js:
   level: 5
   seniority: 4
@@ -12,17 +24,11 @@ senior_js_tdd:
   career: js
   skill: tdd
 
-senior_js_ruby:
+supersenior_js_ruby:
   level: 1
-  seniority: 3
+  seniority: 4
   career: js
   skill: ruby
-
-semisenior_js_js:
-  level: 3
-  seniority: 2
-  career: js
-  skill: javascript
 
 junior_ruby_tdd:
   level: 3

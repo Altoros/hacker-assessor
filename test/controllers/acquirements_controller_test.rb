@@ -19,9 +19,11 @@ class AcquirementsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create acquirement" do
+  test "should create a given acquirement" do
     assert_difference('Acquirement.count') do
-      post :create, acquirement: { level: 2, skill_id: Skill.create(name: 'jQuery') }
+      post :create, acquirement: { level: 2,
+                                   hacker_id: hackers(:jorge).id,
+                                   skill_id: Skill.create(name: 'jQuery') }
     end
   end
 

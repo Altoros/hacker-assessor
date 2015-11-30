@@ -19,6 +19,12 @@ class Hacker < ActiveRecord::Base
   end
 
   def experience skill
-    acquirements.find_or_initialize_by(skill: skill).experience
+    acquirement = acquirements.where(skill: skill).first
+    level = acquirement ? acquirement.level : 0
+    Experience.new skill.id, level
+  end
+
+  def is_elder?
+    seniority >= Seniority.new(Seniority::NAMES.index('Senior'))
   end
 end

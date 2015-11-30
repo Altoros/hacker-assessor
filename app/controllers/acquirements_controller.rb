@@ -4,11 +4,11 @@ class AcquirementsController < ApplicationController
   respond_to :html
 
   def index
-    @acquirements = acquirements
+    @acquirements = current_hacker.acquirements
   end
 
   def new
-    @acquirement = acquirements.new
+    @acquirement = Acquirement.new
   end
 
   def edit
@@ -16,10 +16,13 @@ class AcquirementsController < ApplicationController
 
   def create
     skill = acquirement_params.delete(:skill_id)
-    @acquirement = acquirements.find_or_initialize_by skill_id: skill
+    @acquirement = Acquirement.find_or_initialize_by(
+      skill_id: skill,
+      hacker_id: acquirement_params.delete(:hacker_id)
+    )
     @acquirement.update acquirement_params
     respond_with(@acquirement,
-                 notice: "Now you know #{ @acquirement.skill.name }",
+                 notice: "Now #{@acquirement.hacker.name} knows #{ @acquirement.skill.name }",
                  location: root_path)
   end
 
@@ -34,12 +37,13 @@ class AcquirementsController < ApplicationController
   end
 
   private
+
     def acquirements
       current_hacker.acquirements
     end
 
     def set_acquirement
-      @acquirement = acquirements.find(params[:id])
+      @acquirement = Acquirement.find(params[:id])
     end
 
     def acquirement_params
