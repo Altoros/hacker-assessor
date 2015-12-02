@@ -285,3 +285,13 @@ section section {
 .not-accomplished {
   background-color: #FF9685;
 }
+
+html.javascript form.autosubmit {
+  input , select :after {
+    border: solid blue 2px;
+  }
+
+  input[type=submit] {
+    display: none;
+  }
+}
