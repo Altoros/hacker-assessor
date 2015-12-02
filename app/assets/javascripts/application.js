@@ -13,4 +13,3 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require add_more_handler
