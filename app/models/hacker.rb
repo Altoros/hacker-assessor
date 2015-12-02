@@ -9,7 +9,8 @@ class Hacker < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
 
   def seniority
-    career.get_seniority acquirements unless id.nil?
+    # memoize the seniority as it will not change in a single request
+    @seniority ||= career.get_seniority acquirements unless id.nil?
   end
 
   def missing_requirements_for_next_seniority
