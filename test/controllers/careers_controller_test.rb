@@ -50,11 +50,20 @@ class CareersControllerTest < ActionController::TestCase
     assert_equal 4, @career.requirements(true).size
   end
 
-  test "should destroy career" do
+  test "should destroy a career without hackers" do
     assert_difference('Career.count', -1) do
-      delete :destroy, id: @career
+      delete :destroy, id: careers(:ruby)
     end
 
     assert_redirected_to careers_path
+  end
+
+  test "careers with hackers cannot be destroyed" do
+    assert_difference('Career.count', 0) do
+      delete :destroy, id: careers(:js)
+    end
+
+    assert_redirected_to assigns(:career)
+    assert_equal'Career could not be destroyed.', flash[:alert]
   end
 end
