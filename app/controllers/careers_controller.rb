@@ -21,12 +21,14 @@ class CareersController < ApplicationController
   end
 
   def create
-    @career = build_bulk_importer
+    @career = Career.new career_params
+    bulk_import_requirements or @career.save
     respond_with(@career)
   end
 
   def update
-    @career = build_bulk_importer
+    @career.update_attributes career_params
+    bulk_import_requirements
     respond_with(@career)
   end
 
@@ -46,12 +48,12 @@ class CareersController < ApplicationController
     end
 
     def career_params
-      params.require(:career).permit(:name, :description, :requirements)
+      params.require(:career).permit(:name, :description)
     end
 
-    def build_bulk_importer
-      BulkCareerImporter.new career_params[:name],
-        career_params[:requirements].try(:tempfile),
-        career_params[:description]
+    def bulk_import_requirements
+      requirements = params[:career][:requirements].try(:tempfile)
+      BulkCareerImporter.new(@career).import(requirements) if requirements.present?
     end
+
 end

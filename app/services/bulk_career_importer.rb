@@ -1,38 +1,43 @@
 require 'csv'
-require 'forwardable'
 
 class BulkCareerImporter
-
-  include ActiveRecord::Validations
-  extend Forwardable
 
   ENFORCED_HEADERS = %w[ skill apprentice junior junior+ semi-senior
                          semi-senior+ senior senior+ lead architect
                          hero ]
 
-  attr_accessor :career
-  def_delegators :career, :to_model, :to_param, :to_key, :name, :description
+  attr_reader :career
 
-  def initialize name, requirements, description=nil
+  def initialize career
+    @career = career
+  end
+
+  def import requirements
     Career.transaction do
-      build_career name
-      career.description = description if description
+      raise ActiveRecord::Rollback unless career.save
       career.requirements.destroy_all
-      data = CSV.new requirements, headers: true, header_converters: :downcase
-      data = data.read
-      check_headers data
-      data.each do |skill_requirements|
-        build_requirements find_skill(skill_requirements['skill']),
-          skill_requirements.fields(1..-1)
-      end
+      process_csv requirements
     end
   end
 
   private
 
+  def process_csv requirements
+    data = CSV.new requirements, headers: true, header_converters: :downcase
+    data = data.read
+    check_headers data
+    data.each do |skill_requirements|
+      build_requirements find_skill(skill_requirements['skill']),
+        skill_requirements.fields(1..-1)
+    end
+  rescue Encoding::UndefinedConversionError
+    career.errors.add(:requirements, 'file have invalid characters')
+    raise ActiveRecord::Rollback
+  end
+
   def check_headers data
     unless data.headers == ENFORCED_HEADERS
-      errors.add :requirements, 'headers do not match'
+      career.errors.add :requirements, 'headers do not match'
       raise ActiveRecord::Rollback, 'invalid headers'
     end
   end
@@ -59,14 +64,6 @@ class BulkCareerImporter
         career.requirements.create! seniority: seniority,
                                      level: exp,
                                      skill: skill
-    end
-  end
-
-  def build_career name
-    self.career = Career.find_or_create_by name: name.underscore
-    if career.invalid?
-      errors.add :name, career.errors[:name].first
-      raise(ActiveRecord::Rollback, 'lacking name')
     end
   end
 

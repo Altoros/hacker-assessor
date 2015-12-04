@@ -25,9 +25,20 @@ class CareersControllerTest < ActionController::TestCase
       }
     end
 
-    requirements = Career.find_by(name: 'dev_ops').requirements
-    refute requirements.empty?
-    assert_redirected_to career_path(assigns(:career))
+    career = assigns(:career)
+    refute career.requirements.empty?, 'requirements got there'
+    assert_equal 'Like a sysadmin that write code', career.description
+    assert_redirected_to career_path(career)
+  end
+
+  test 'fails on create with invalid csv' do
+    assert_no_difference('Career.count') do
+      post :create, career: {
+        name: 'dev-ops',
+        description: 'Like a sysadmin that write code',
+        requirements: fixture_file_upload('files/invalid.csv')
+      }
+    end
   end
 
   test "should show career" do
@@ -48,6 +59,14 @@ class CareersControllerTest < ActionController::TestCase
     }
     assert_redirected_to career_path(assigns(:career))
     assert_equal 4, @career.requirements(true).size
+  end
+
+  test 'updates career description without affecting requirements' do
+    patch :update, id: @career, career: {
+      name: @career.name,
+      description: 'new description'
+    }
+    assert_equal 'new description', assigns(:career).description
   end
 
   test "should destroy a career without hackers" do
