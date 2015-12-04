@@ -102,6 +102,8 @@ GEM
     pry-doc (0.8.0)
       pry (~> 0.9)
       yard (~> 0.8)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -196,6 +198,7 @@ DEPENDENCIES
   pg
   pry
   pry-doc
+  pry-rails
   rails (= 4.2.4)
   responders (~> 2.1)
   rollbar (~> 2.4)

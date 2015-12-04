@@ -40,6 +40,7 @@ group :development, :test do
   gem 'byebug'
   gem 'pry'
   gem 'pry-doc'
+  gem 'pry-rails'
   gem 'sqlite3'
 end
 
