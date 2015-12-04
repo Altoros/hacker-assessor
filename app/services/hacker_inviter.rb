@@ -1,13 +1,20 @@
 class HackerInviter
-  def initialize params
-    @hacker = Hacker.new(params.except :seniority)
-    @hacker.save
-    add_acquirements params[:seniority]
+
+  attr_reader :hacker
+
+  def initialize hacker
+    @hacker = hacker
   end
 
-  def hacker
-    @hacker
+  def give_seniority seniority
+    Hacker.transaction do
+      hacker.save
+      hacker.acquirements.destroy_all
+      add_acquirements seniority
+    end
   end
+
+  private
 
   def add_acquirements seniority
     skills_levels = hacker.career.requirements.

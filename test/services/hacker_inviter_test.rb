@@ -1,15 +1,12 @@
 require 'test_helper'
 
 class HackerInviterTest < ActiveSupport::TestCase
-  test "add acquirements when a hacker is invted" do
-    params = { email: 'semi-senior@hacker.com',
-               name: 'SemiSenior JS',
-               career_id: careers(:js).id,
-               password: 'password',
-               password_confirmation: 'password',
-               seniority: '3' }
 
-    HackerInviter.new(params)
-    assert_equal Hacker.find_by(email: 'semi-senior@hacker.com').seniority, '3'
+  test 'add acquirements to match the given seniority' do
+    hacker = hackers(:jorge)
+    assert_equal 2, hacker.seniority
+    HackerInviter.new(hacker).give_seniority(3)
+    assert_equal 3, hacker.seniority(true)
   end
+
 end

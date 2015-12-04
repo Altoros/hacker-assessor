@@ -48,10 +48,11 @@ class HackersControllerTest < ActionController::TestCase
   test "should update hacker" do
     patch :update, id: @hacker, hacker: { email: @hacker.email,
                                           name: @hacker.name,
-                                          career_id: careers(:js),
+                                          career_id: careers(:ruby),
                                           password: 'secret',
                                           password_confirmation: 'secret' }
     assert_redirected_to hacker_path(assigns(:hacker))
+    assert_equal careers(:ruby), assigns(:hacker).career(true)
   end
 
   test "should destroy hacker" do

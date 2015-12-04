@@ -21,7 +21,8 @@ class HackersController < ApplicationController
   end
 
   def create
-    @hacker = HackerInviter.new(hacker_params).hacker
+    @hacker = Hacker.new hacker_params
+    HackerInviter.new(@hacker).give_seniority params[:hacker][:seniority]
     respond_with(@hacker)
   end
 
@@ -41,7 +42,7 @@ class HackersController < ApplicationController
     end
 
     def hacker_params
-      params.require(:hacker).permit(:name, :email, :career_id, :seniority,
-                                     :password, :password_confirmation)
+      params.require(:hacker).permit(:name, :email, :career_id, :password,
+                                     :password_confirmation)
     end
 end
