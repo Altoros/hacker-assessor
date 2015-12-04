@@ -11,6 +11,11 @@ class HackersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:hackers)
   end
 
+  test 'index dust not blow up when there are hackers without seniority' do
+    hacker = hackers(:jorge).update! career: careers(:ruby)
+    get :index
+  end
+
   test "should get invite" do
     get :new
     assert_response :success

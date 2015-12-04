@@ -30,6 +30,11 @@ supersenior_js_ruby:
   career: js
   skill: ruby
 
+apprentice_ruby_ruby:
+  level: 2
+  career: ruby
+  skill: ruby
+
 junior_ruby_tdd:
   level: 3
   seniority: 1
