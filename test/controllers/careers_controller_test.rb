@@ -58,7 +58,7 @@ class CareersControllerTest < ActionController::TestCase
       requirements: fixture_file_upload('files/dev-ops.csv')
     }
     assert_redirected_to career_path(assigns(:career))
-    assert_equal 4, @career.requirements(true).size
+    assert_equal 3, @career.requirements(true).size
   end
 
   test 'updates career description without affecting requirements' do

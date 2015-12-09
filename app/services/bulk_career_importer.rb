@@ -44,7 +44,7 @@ class BulkCareerImporter
 
   def find_skill skill_name
     Skill.find_by 'lower(name) = ?', skill_name.downcase or
-      Skill.create name: skill_name.downcase
+      Skill.create name: skill_name
   end
 
   # skill is an Skill object that already exists in the DB.
@@ -58,12 +58,12 @@ class BulkCareerImporter
   # and each seniority.
   def build_requirements skill, requirements
     requirements.zip(Seniority::NAMES)
-      .chunk{ |v, s| v.to_i unless v.nil? }
+      .chunk{ |v, s| v.to_i unless v.nil? || v.to_i <= 0 }
       .map do |exp, seniorities|
         seniority = Seniority::NAMES.index seniorities.first.last
         career.requirements.create! seniority: seniority,
-                                     level: exp,
-                                     skill: skill
+                                    level: exp,
+                                    skill: skill
     end
   end
 

@@ -17,7 +17,7 @@ class BulkCareerImporterTest < ActiveSupport::TestCase
 
   test 'adds the given requirements to the career' do
     bulk_upload careers(:ruby), <<-CSV.strip_heredoc
-       tdd,0,0,0,0,0,0,5,5,5,5
+       tdd,0,0,0,0,2,2,5,5,5,5
        javascript,,,1,1,1,1,1,1,1,1
        CSV
     built_requirements = careers(:ruby).requirements
