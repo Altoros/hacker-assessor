@@ -1,5 +1,5 @@
 class Career < ActiveRecord::Base
-  has_many :hackers
+  has_many :hackers, dependent: :restrict_with_error
   has_many :requirements
 
   validates :name, presence: true, uniqueness: true

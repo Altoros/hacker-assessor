@@ -10,4 +10,10 @@ class SeniorityTest < ActiveSupport::TestCase
     assert_equal 'Junior', Seniority.new(1).to_s
   end
 
+  test 'it handles seniorities bellow the first' do
+    seniority = Seniority.new(0).previous
+    assert_equal 'None', seniority.to_s
+    assert_equal -1, seniority.to_i
+  end
+
 end

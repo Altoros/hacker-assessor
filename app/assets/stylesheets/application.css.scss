@@ -31,6 +31,8 @@ $text-input-inner-shadow: #646464;
 $link-color: #949292;
 $text-color: $link-color;
 
+$media-large: 800px;
+
 @mixin button {
   width: 100%;
   height: 40px;
@@ -119,7 +121,7 @@ nav {
   background: $background-dark;
   height: inherit;
 
-  @include media(1024px) {
+  @include media($media-large) {
     @include span-columns(3, 'block-collapse');
   }
 
@@ -155,7 +157,7 @@ main {
     overflow-y: scroll;
   }
 
-  @include media(1024px) {
+  @include media($media-large) {
     @include span-columns(9, 'block-collapse');
     @include main-flex();
 
@@ -282,4 +284,14 @@ section section {
 
 .not-accomplished {
   background-color: #FF9685;
+}
+
+html.javascript form.autosubmit {
+  input , select :after {
+    border: solid blue 2px;
+  }
+
+  input[type=submit] {
+    display: none;
+  }
 }

@@ -1,7 +1,15 @@
 <h2><%= @career.name %></h2>
+<%= link_to 'Panorama', panorama_career_path(@career) %> |
+<%= link_to 'Edit', edit_career_path(@career) %> |
+<%- if @career.hackers.empty? %>
+  <%= link_to 'Destroy', career_path(@career), method: :delete,
+                         data: { confirm: 'Are you sure?' } %> |
+<%- end %>
 <%= link_to 'Back', careers_path %>
 
 <p><%= @career.description %></p>
+
+<h3>Requirements</h3>
 
 <ul class="requirements">
   <% @career.requirements.each do |requirement| %>
@@ -19,5 +27,3 @@
   </li>
 </ul>
 
-<%= link_to 'Edit', edit_career_path(@career) %> |
-<%= link_to 'Destroy', career_path(@career), method: :delete, data: { confirm: 'Are you sure?' } %> |

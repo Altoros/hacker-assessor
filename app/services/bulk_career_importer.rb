@@ -1,32 +1,50 @@
 require 'csv'
-require 'forwardable'
 
 class BulkCareerImporter
 
-  include ActiveRecord::Validations
-  extend Forwardable
+  ENFORCED_HEADERS = %w[ skill apprentice junior junior+ semi-senior
+                         semi-senior+ senior senior+ lead architect
+                         hero ]
 
-  attr_accessor :career
-  def_delegators :career, :to_model, :to_param, :to_key, :name, :description
+  attr_reader :career
 
-  def initialize name, requirements, description=nil
+  def initialize career
+    @career = career
+  end
+
+  def import requirements
     Career.transaction do
-      build_career name
-      career.description = description if description
+      raise ActiveRecord::Rollback unless career.save
       career.requirements.destroy_all
-      CSV.parse(requirements) do |skill, *requirements_for_skill|
-        build_requirements find_skill(skill), requirements_for_skill
-      end
+      process_csv requirements
     end
   end
 
   private
 
+  def process_csv requirements
+    data = CSV.new requirements, headers: true, header_converters: :downcase
+    data = data.read
+    check_headers data
+    data.each do |skill_requirements|
+      build_requirements find_skill(skill_requirements['skill']),
+        skill_requirements.fields(1..-1)
+    end
+  rescue Encoding::UndefinedConversionError
+    career.errors.add(:requirements, 'file have invalid characters')
+    raise ActiveRecord::Rollback
+  end
+
+  def check_headers data
+    unless data.headers == ENFORCED_HEADERS
+      career.errors.add :requirements, 'headers do not match'
+      raise ActiveRecord::Rollback, 'invalid headers'
+    end
+  end
+
   def find_skill skill_name
-    Skill.find_by! 'lower(name) = ?', skill_name.downcase
-  rescue ActiveRecord::RecordNotFound
-    errors.add :requirements, "includes non existing skill \"#{ skill_name }\""
-    raise ActiveRecord::Rollback, 'invalid skill'
+    Skill.find_by 'lower(name) = ?', skill_name.downcase or
+      Skill.create name: skill_name
   end
 
   # skill is an Skill object that already exists in the DB.
@@ -40,20 +58,12 @@ class BulkCareerImporter
   # and each seniority.
   def build_requirements skill, requirements
     requirements.zip(Seniority::NAMES)
-      .chunk{ |v, s| v.to_i unless v.nil? }
+      .chunk{ |v, s| v.to_i unless v.nil? || v.to_i <= 0 }
       .map do |exp, seniorities|
         seniority = Seniority::NAMES.index seniorities.first.last
         career.requirements.create! seniority: seniority,
-                                     level: exp,
-                                     skill: skill
-    end
-  end
-
-  def build_career name
-    self.career = Career.find_or_create_by name: name.underscore
-    if career.invalid?
-      errors.add :name, career.errors[:name].first
-      raise(ActiveRecord::Rollback, 'lacking name')
+                                    level: exp,
+                                    skill: skill
     end
   end
 

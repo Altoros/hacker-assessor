@@ -11,6 +11,11 @@ class HackersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:hackers)
   end
 
+  test 'index dust not blow up when there are hackers without seniority' do
+    hacker = hackers(:jorge).update! career: careers(:ruby)
+    get :index
+  end
+
   test "should get invite" do
     get :new
     assert_response :success
@@ -48,10 +53,11 @@ class HackersControllerTest < ActionController::TestCase
   test "should update hacker" do
     patch :update, id: @hacker, hacker: { email: @hacker.email,
                                           name: @hacker.name,
-                                          career_id: careers(:js),
+                                          career_id: careers(:ruby),
                                           password: 'secret',
                                           password_confirmation: 'secret' }
     assert_redirected_to hacker_path(assigns(:hacker))
+    assert_equal careers(:ruby), assigns(:hacker).career(true)
   end
 
   test "should destroy hacker" do

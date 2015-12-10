@@ -19,7 +19,8 @@
         <td><%= requirement.skill.name %></td>
         <td>
           <% if current_hacker.is_elder? %>
-            <%= form_for :experience, url: hacker_experiences_path(@hacker) do |f| %>
+            <%= form_for :experience, url: hacker_experiences_path(@hacker),
+                                      html: { class: 'autosubmit' } do |f| %>
               <%= f.hidden_field :skill_id, value: current_experience.skill_id %>
               <%= f.select       :level, Experience::LEVELS,
                                  selected: current_experience.level %>

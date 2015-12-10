@@ -25,9 +25,20 @@ class CareersControllerTest < ActionController::TestCase
       }
     end
 
-    requirements = Career.find_by(name: 'dev_ops').requirements
-    refute requirements.empty?
-    assert_redirected_to career_path(assigns(:career))
+    career = assigns(:career)
+    refute career.requirements.empty?, 'requirements got there'
+    assert_equal 'Like a sysadmin that write code', career.description
+    assert_redirected_to career_path(career)
+  end
+
+  test 'fails on create with invalid csv' do
+    assert_no_difference('Career.count') do
+      post :create, career: {
+        name: 'dev-ops',
+        description: 'Like a sysadmin that write code',
+        requirements: fixture_file_upload('files/invalid.csv')
+      }
+    end
   end
 
   test "should show career" do
@@ -47,14 +58,31 @@ class CareersControllerTest < ActionController::TestCase
       requirements: fixture_file_upload('files/dev-ops.csv')
     }
     assert_redirected_to career_path(assigns(:career))
-    assert_equal 4, @career.requirements(true).size
+    assert_equal 3, @career.requirements(true).size
   end
 
-  test "should destroy career" do
+  test 'updates career description without affecting requirements' do
+    patch :update, id: @career, career: {
+      name: @career.name,
+      description: 'new description'
+    }
+    assert_equal 'new description', assigns(:career).description
+  end
+
+  test "should destroy a career without hackers" do
     assert_difference('Career.count', -1) do
-      delete :destroy, id: @career
+      delete :destroy, id: careers(:ruby)
     end
 
     assert_redirected_to careers_path
+  end
+
+  test "careers with hackers cannot be destroyed" do
+    assert_difference('Career.count', 0) do
+      delete :destroy, id: careers(:js)
+    end
+
+    assert_redirected_to assigns(:career)
+    assert_equal'Career could not be destroyed.', flash[:alert]
   end
 end

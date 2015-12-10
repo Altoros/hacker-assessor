@@ -27,10 +27,12 @@
     <%= f.label :career_id %>
     <%= f.select :career_id, Career.all.collect { |p| [ p.name, p.id  ] } %>
   </div>
-  <div class="field">
-    <%= f.label :seniority %>
-    <%= f.seniority_select %>
-  </div>
+  <% unless @hacker.persisted? %>
+    <div class="field">
+      <%= f.label :seniority %>
+      <%= f.seniority_select %>
+    </div>
+  <% end -%>
   <div class="actions">
     <%= f.submit %>
   </div>

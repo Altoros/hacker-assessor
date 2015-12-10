@@ -2,20 +2,22 @@ require 'test_helper'
 
 class BulkCareerImporterTest < ActiveSupport::TestCase
 
-  test 'create a new career with the given name' do
-    BulkCareerImporter.new('DevOps', '')
-    assert_equal 3, Career.count
-    assert_equal 'dev_ops', Career.last.name
+  def bulk_upload career, requirements = 'tdd,0,0,0,0,0,0,5,5,5,5'
+    requirements_with_headers = [
+      BulkCareerImporter::ENFORCED_HEADERS.join(','),
+      requirements].join("\n")
+    BulkCareerImporter.new(career).import requirements_with_headers
   end
 
-  test 'overwrite an existing career with that name' do
-    BulkCareerImporter.new('ruby', '')
-    assert_equal 2, Career.count
+  test 'saves the career that is being processed' do
+    career = Career.new(name: 'devop', description: 'what')
+    bulk_upload career
+    assert career.persisted?
   end
 
   test 'adds the given requirements to the career' do
-    BulkCareerImporter.new('ruby', <<-CSV.strip_heredoc)
-       tdd,0,0,0,0,0,0,5,5,5,5
+    bulk_upload careers(:ruby), <<-CSV.strip_heredoc
+       tdd,0,0,0,0,2,2,5,5,5,5
        javascript,,,1,1,1,1,1,1,1,1
        CSV
     built_requirements = careers(:ruby).requirements
@@ -24,26 +26,17 @@ class BulkCareerImporterTest < ActiveSupport::TestCase
     assert_equal 1, built_requirements.where(skill: skills(:javascript)).size
   end
 
-  test 'bulk upload with a missing skill will change nothing' do
-    BulkCareerImporter.new('ruby', <<-CSV.strip_heredoc)
+  test 'bulk upload with a missing skill will create the skill' do
+    bulk_upload careers(:ruby), <<-CSV.strip_heredoc
        tdd,0,1,2,3,3,4,5,5,5,5
-       invalid,0,1,2,3,3,4,5,5,5,5
+       missing,0,0,3,3,3,5,5,5,5,5
        CSV
-    assert_equal 1, careers(:ruby).requirements.size
-  end
-
-  test 'bulk upload with a missing skill have errors' do
-    bulk = BulkCareerImporter.new('ruby', <<-CSV.strip_heredoc)
-       tdd,0,1,2,3,3,4,5,5,5,5
-       scrumming,0,1,2,3,3,4,5,5,5,5
-       CSV
-    assert_equal 1, careers(:ruby).requirements.size
-    assert_includes bulk.errors.full_messages,
-      'Requirements includes non existing skill "scrumming"'
+    missing_skill = Skill.find_by name: 'missing'
+    assert missing_skill, 'skill was created'
   end
 
   test 'bulk upload with requirements with nils' do
-    BulkCareerImporter.new('ruby', <<-CSV.strip_heredoc)
+    bulk_upload careers(:ruby), <<-CSV.strip_heredoc
        tdd,,,,1,,3,,,,
        CSV
     assert_equal 2, careers(:ruby).requirements.size

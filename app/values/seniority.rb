@@ -8,6 +8,7 @@ class Seniority
   def_delegators :@seniority, :to_i
 
   def initialize seniority
+    seniority = -1 if seniority < 0
     @seniority = seniority
   end
 
@@ -22,11 +23,11 @@ class Seniority
   end
 
   def to_s
+    return 'None' if @seniority == -1
     NAMES.fetch(@seniority)
   end
 
   def previous
-    raise "There is no previous for #{ self }" if @seniority == 0
     self.class.new(@seniority - 1)
   end
 

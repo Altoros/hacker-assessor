@@ -18,7 +18,10 @@
     <%= f.text_area :description, :placeholder => :description %>
   </div>
   <div class="field">
-    <%= f.file_field :requirements, required: true, :placeholder => :requirements %>
+    <label for="career_requirements">
+      <%= f.file_field :requirements, accept: 'text/csv' %>
+      Bulk upload requirements (CSV)
+    </label>
   </div>
   <div class="actions">
     <%= f.submit %>
