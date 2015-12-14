@@ -30,8 +30,11 @@ $text-input-placeholder-light: #BBBBBB;
 $text-input-inner-shadow: #646464;
 $link-color: #949292;
 $text-color: $link-color;
+$hacker-green: hsl(100, 70, 60);
 
 $media-large: 800px;
+
+@import 'turbolinks';
 
 @mixin button {
   width: 100%;
