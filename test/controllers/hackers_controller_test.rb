@@ -39,6 +39,11 @@ class HackersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'show a user dashboard' do
+    get :dashboard, id: @hacker
+    assert_response :success
+  end
+
   test "show a hacker from an elder" do
     session[:hacker_id] = hackers(:leo).id
     get :show, id: @hacker
