@@ -18,4 +18,8 @@ class DashboardTest < ActiveSupport::TestCase
     assert_equal 'Junior+ => Semi-Senior', dashboard.seniority_detail
   end
 
+  test 'shows matching requirements' do
+    assert dashboard.matching_requirements
+  end
+
 end

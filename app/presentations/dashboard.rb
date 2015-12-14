@@ -17,6 +17,10 @@ class Dashboard
     "#{ current_seniority } => #{ current_seniority.next }"
   end
 
+  def matching_requirements
+    []
+  end
+
   private
 
   def current_seniority
