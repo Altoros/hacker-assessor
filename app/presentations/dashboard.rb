@@ -1,7 +1,7 @@
 class Dashboard
 
   def initialize hacker, *_
-    raise ArgumentError, "hacker is not there: #{ hacker.inspect }" unless hacker
+    raise ArgumentError unless hacker
     @hacker = hacker
   end
 
@@ -11,6 +11,16 @@ class Dashboard
 
   def career
     @career ||= @hacker.career
+  end
+
+  def seniority_detail
+    "#{ current_seniority } => #{ current_seniority.next }"
+  end
+
+  private
+
+  def current_seniority
+    @current_seniority ||= @hacker.seniority
   end
 
 end
