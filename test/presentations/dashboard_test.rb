@@ -19,7 +19,17 @@ class DashboardTest < ActiveSupport::TestCase
   end
 
   test 'shows matching requirements' do
-    assert dashboard.matching_requirements
+    matching_requirements = dashboard.matching_requirements
+    assert matching_requirements
+    assert matching_requirements.first.required
+    assert matching_requirements.first.skill_name
+    assert matching_requirements.first.current
+  end
+
+  test 'elder hackers can edit the dashboard' do
+    refute dashboard.editable?
+    assert Dashboard.new(hackers(:jorge), reviewer: hackers(:leo)).editable?,
+      'Leo can edit'
   end
 
 end
