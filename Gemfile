@@ -50,6 +50,7 @@ group :test do
   gem 'launchy'
   gem "codeclimate-test-reporter", require: false
   gem 'simplecov', require: false
+  gem 'minitest-profile'
 end
 
 group :development do
