@@ -19,7 +19,7 @@
         <td><%= mr.skill_name %></td>
         <td>
           <% if @dashboard.editable? %>
-            <%= form_for :experience, url: hacker_experiences_path(@hacker),
+            <%= form_for :experience, url: hacker_experiences_path(@dashboard.hacker),
                                       html: { class: 'autosubmit' } do |f| %>
               <%= f.hidden_field :skill_id, value: mr.current.skill_id %>
               <%= f.select       :level, Experience::LEVELS,

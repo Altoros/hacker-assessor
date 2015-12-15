@@ -1,5 +1,7 @@
 class Dashboard
 
+  attr_reader :hacker
+
   def initialize hacker, reviewer: hacker
     raise ArgumentError unless hacker
     @hacker = hacker

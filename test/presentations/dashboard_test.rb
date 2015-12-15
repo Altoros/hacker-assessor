@@ -32,4 +32,8 @@ class DashboardTest < ActiveSupport::TestCase
       'Leo can edit'
   end
 
+  test 'have a hacker' do
+    assert_equal hackers(:jorge), dashboard.hacker
+  end
+
 end
