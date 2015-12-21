@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   end
   resources :acquirements, except: [:show]
   resources :hackers do
+    member do
+      get 'dashboard'
+    end
     resources :experiences, only: [:create]
   end
   resources :skills

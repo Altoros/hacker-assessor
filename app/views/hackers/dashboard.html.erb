@@ -1,0 +1,37 @@
+<h1>
+  <%= @dashboard.title %> -
+  <%= link_to @dashboard.career.name, panorama_career_path(@dashboard.career) %>
+</h1>
+<h2><%= @dashboard.seniority_detail %></h2>
+
+<table class="dashboard">
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Current</th>
+      <th>Required</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dashboard.missing_requirements.each do |mr| %>
+      <tr class="<%= assign_class mr.required, mr.current %>">
+        <td><%= mr.skill.name %></td>
+        <td>
+          <% if @dashboard.editable? %>
+            <%= form_for :experience, url: hacker_experiences_path(@dashboard.hacker),
+                                      html: { class: 'autosubmit' } do |f| %>
+              <%= f.hidden_field :skill_id, value: mr.current.skill_id %>
+              <%= f.select       :level, Experience::LEVELS,
+                                 selected: mr.current.level %>
+              <%= submit_tag 'update' %>
+            <% end %>
+          <% else %>
+            <%= mr.current.level %>
+          <% end %>
+        </td>
+        <td><%= mr.required.level %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -19,3 +19,5 @@ $('html').addClass('javascript')
 # autosubmit forms
 $(document).on 'change', 'form.autosubmit', (e) ->
   $(this).submit()
+
+Turbolinks.enableProgressBar()

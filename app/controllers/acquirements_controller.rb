@@ -38,10 +38,6 @@ class AcquirementsController < ApplicationController
 
   private
 
-    def acquirements
-      current_hacker.acquirements
-    end
-
     def set_acquirement
       @acquirement = Acquirement.find(params[:id])
     end

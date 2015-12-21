@@ -46,6 +46,12 @@ class CareersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'see a panorama of the career' do
+    get :panorama, id: @career
+    assert_response :success
+    assert assigns(:panorama)
+  end
+
   test "should get edit" do
     get :edit, id: @career
     assert_response :success

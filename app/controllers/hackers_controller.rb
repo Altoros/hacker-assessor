@@ -1,5 +1,5 @@
 class HackersController < ApplicationController
-  before_action :set_hacker, only: [:show, :edit, :update, :destroy]
+  before_action :set_hacker, only: [:show, :dashboard, :edit, :update, :destroy]
 
   respond_to :html
 
@@ -8,8 +8,9 @@ class HackersController < ApplicationController
     respond_with(@hackers)
   end
 
-  def show
-    respond_with(@hacker)
+  def dashboard
+    @dashboard = Dashboard.new @hacker, reviewer: current_hacker
+    respond_with(@dashboard)
   end
 
   def new
