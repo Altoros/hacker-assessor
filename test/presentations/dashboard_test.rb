@@ -22,17 +22,18 @@ class DashboardTest < ActiveSupport::TestCase
     assert_equal 'Junior+ => Semi-Senior', dashboard.seniority_detail
   end
 
-  test 'shows matching requirements' do
-    matching_requirements = dashboard.matching_requirements
-    assert matching_requirements
-    assert_equal experience, matching_requirements.first.required
-    assert_equal 'tdd', matching_requirements.first.skill_name
-    assert_equal experience(level: 2), matching_requirements.first.current
-    assert_equal 1, matching_requirements.size
+  test 'shows missing requirements' do
+    missing_requirements = dashboard.missing_requirements 
+    assert missing_requirements 
+    tdd_requirement = missing_requirements.where(skill: skills(:tdd)).first
+    assert_equal experience, tdd_requirement.required
+    assert_equal 'tdd', tdd_requirement.skill.name
+    assert_equal experience(level: 2), tdd_requirement.current
+    assert_equal 1, missing_requirements.size
   end
 
   test 'find all the missign requirements' do
-    assert_equal 2, dashboard(hackers(:rodrigo)).matching_requirements.size
+    assert_equal 2, dashboard(hackers(:rodrigo)).missing_requirements.size
   end
 
   test 'elder hackers can edit the dashboard' do

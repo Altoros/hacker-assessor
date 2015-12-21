@@ -1,5 +1,15 @@
 class Dashboard
 
+  class MatchingRequirement < Requirement
+    def current
+      @current ||= Experience.new skill_id, current_level
+    end
+
+    def required
+      @required ||= Experience.new skill_id, level
+    end
+  end
+
   attr_reader :hacker
 
   def initialize hacker, reviewer: hacker
@@ -20,11 +30,10 @@ class Dashboard
     "#{ current_seniority } => #{ current_seniority.next }"
   end
 
-  def matching_requirements
-    missing_requirements.map do |requirement|
-      MatchingRequirement.new @hacker.experience(requirement.skill),
-                              requirement.experience
-    end
+  def missing_requirements
+    matching_requirements.where('acquirements.level < requirements.level OR
+                                 acquirements.level IS NULL').
+      where(seniority: current_seniority.next)
   end
 
   def editable?
@@ -37,16 +46,16 @@ class Dashboard
     @current_seniority ||= @hacker.seniority
   end
 
-  def missing_requirements
-    @missing_requirements ||= @hacker.career.missing_requirements(@hacker.acquirements).keep_if do |r|
-      r.seniority == current_seniority.next
-    end
-  end
-
-  MatchingRequirement = Struct.new :current, :required do
-    def skill_name
-      required.skill.name
-    end
+  def matching_requirements
+    MatchingRequirement.
+      where(career: career).
+      includes(:skill).
+      select('requirements.*', 'acquirements.level AS current_level').
+      joins <<-SQL.strip_heredoc
+      LEFT JOIN acquirements ON
+                acquirements.skill_id = requirements.skill_id AND
+                acquirements.hacker_id = #{ @hacker.id }
+      SQL
   end
 
 end

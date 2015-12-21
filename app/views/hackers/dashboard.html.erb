@@ -14,9 +14,9 @@
   </thead>
 
   <tbody>
-    <% @dashboard.matching_requirements.each do |mr| %>
+    <% @dashboard.missing_requirements.each do |mr| %>
       <tr class="<%= assign_class mr.required, mr.current %>">
-        <td><%= mr.skill_name %></td>
+        <td><%= mr.skill.name %></td>
         <td>
           <% if @dashboard.editable? %>
             <%= form_for :experience, url: hacker_experiences_path(@dashboard.hacker),
